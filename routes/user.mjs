@@ -1,32 +1,30 @@
-import { Router } from "express"; 
-import { User } from "../models/user.mjs";
+// routes/user.mjs
+import { Router } from "express";
+import {
+  handlerForSignUp,
+  handlerForSignIn,
+  handlerForLogout,
+} from "../controllers/user.mjs";
 
 const router = Router();
 
+// SignIn Get Route
 router.get("/signin", (req, res) => {
-    res.render("signin");
+  res.render("signin");
 });
 
+// SignUp Get Route
 router.get("/signup", (req, res) => {
-    res.render("signup");
+  res.render("signup");
 });
 
-router.post("/signin", async (req, res) => {
-    const { email, password} = req.body;
-    const user = await User.matchPassword(email, password);
+// SignIn Post Route
+router.post("/signin", handlerForSignIn);
 
-    console.log("User", user);
-    return res.render('home');
-});
+// SignUp Post Route
+router.post("/signup", handlerForSignUp);
 
-router.post("/signup", async (req, res) => {
-    const { fullName, email, password } = req.body;
-    await User.create({
-        fullName,
-        email,
-        password
-    });
-    return res.render('home');
-});
+// Logout Get Route
+router.get("/logout", handlerForLogout);
 
 export default router;

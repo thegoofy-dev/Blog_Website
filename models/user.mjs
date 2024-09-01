@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+// models/user.mjs
+import mongoose, { Schema } from "mongoose";
 import { createHmac, randomBytes } from "crypto";
-import { Schema } from "mongoose";
+import { createTokenForUser } from "../services/authentication.mjs";
 
 const userSchema = new Schema(
   {
@@ -27,7 +28,7 @@ const userSchema = new Schema(
     },
     profileImageURL: {
       type: String,
-      default: "/public/images",
+      default: "/public/images/default-profile.png",
     },
   },
   {
@@ -40,7 +41,7 @@ userSchema.pre("save", function (next) {
 
   if (!user.isModified("password")) return next();
 
-  const salt = randomBytes(16).toString('hex');
+  const salt = randomBytes(16).toString("hex");
   const hashPassword = createHmac("sha256", salt)
     .update(user.password)
     .digest("hex");
@@ -51,7 +52,7 @@ userSchema.pre("save", function (next) {
   next();
 });
 
-userSchema.static("matchPassword", async function (email, password) {
+userSchema.statics.matchPasswordAndGenerateToken = async function (email, password) {
   const user = await this.findOne({ email });
 
   if (!user) throw new Error("User not found!");
@@ -64,8 +65,11 @@ userSchema.static("matchPassword", async function (email, password) {
   if (hashedPassword !== userProvidedHash) {
     throw new Error("Invalid Credentials!");
   }
-  return user;
-});
+
+  const token = createTokenForUser(user);
+  
+  return token;
+};
 
 const User = mongoose.model("User", userSchema);
 

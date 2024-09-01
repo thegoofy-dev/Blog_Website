@@ -1,9 +1,10 @@
+// app.mjs
 import express from "express";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import userRouter from "./routes/user.mjs";
 import mongoose from "mongoose";
+import mainRouter from "./routes/index.mjs"
 
 const app = express();
 dotenv.config();
@@ -14,7 +15,7 @@ const url = process.env.Connection_URL;
 mongoose
   .connect(url)
   .then(() => console.log("Connected to Database"))
-  .catch((err) => console.log("Error :", err));
+  .catch((err) => console.log("Error:", err));
 
 // __dirname and __filename in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -24,13 +25,10 @@ const __dirname = dirname(__filename);
 app.set("view engine", "ejs");
 app.set("views", join(__dirname, "views"));
 
-app.use(express.urlencoded({extended:false}))
-app.use("/user", userRouter);
+app.use(express.urlencoded({ extended: false }));
 
-app.get("/home", (req, res) => {
-  res.render("home");
-});
-
+// Main Router
+app.use(mainRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);
