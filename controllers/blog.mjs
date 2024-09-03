@@ -46,5 +46,19 @@ const renderAddBlogFormHandler = (req, res) => {
     }
   };
   
+  const addCommentToBlogHandler = async (req, res) => {
+    try {
+      await Comment.create({
+        content: req.body.content,
+        createdBy: req.user._id,
+        blogId: req.params.blogId,
+      });
+  
+      res.redirect(`/blog/${req.params.blogId}`);
+    } catch (error) {
+      console.error("Error creating comment:", error);
+      res.status(500).render("error", { message: "Internal Server Error" });
+    }
+  };
 
-  export { createBlogPostHandler, getBlogByIdHandler, renderAddBlogFormHandler };
+  export { addCommentToBlogHandler, createBlogPostHandler, getBlogByIdHandler, renderAddBlogFormHandler };

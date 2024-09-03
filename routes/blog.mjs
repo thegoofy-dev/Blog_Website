@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import path from "path";
-import { createBlogPostHandler, getBlogByIdHandler, renderAddBlogFormHandler } from "../controllers/blog.mjs";
+import { addCommentToBlogHandler, createBlogPostHandler, getBlogByIdHandler, renderAddBlogFormHandler } from "../controllers/blog.mjs";
 
 const router = Router();
 
@@ -27,5 +27,7 @@ router.get("/:id", getBlogByIdHandler);
 // Blog Post Route
 router.post("/", upload.single("coverImage"), createBlogPostHandler);
 
+// Comment Post Route
+router.post("/comment/:blogId", addCommentToBlogHandler);
 
 export default router;

@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --max-old-space-size=4096 --watch app.mjs",
+    "start": "node --watch app.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
