@@ -1,21 +1,16 @@
-// middlewares/authentication.mjs
 import { validateToken } from "../services/authentication.mjs";
 
 function checkForAuthenticationCookie(cookieName) {
   return (req, res, next) => {
     const tokenCookieValue = req.cookies[cookieName];
-    if (!tokenCookieValue) {
-      return next();
+    if (tokenCookieValue) {
+      try {
+        req.user = validateToken(tokenCookieValue);
+      } catch (error) {
+        console.error("Token validation error:", error);
+      }
     }
-
-    try {
-      const userPayload = validateToken(tokenCookieValue);
-      req.user = userPayload;
-    } catch (error) {
-      console.error("Token validation error:", error);
-    }
-
-    return next();
+    next();
   };
 }
 

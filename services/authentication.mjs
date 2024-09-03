@@ -1,4 +1,3 @@
-// services/authentication.mjs
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -19,14 +18,16 @@ function createTokenForUser(user) {
     role: user.role,
   };
 
-  const token = jwt.sign(payload, secret);
-
-  return token;
+  return jwt.sign(payload, secret, { expiresIn: '1h' });
 }
 
 function validateToken(token) {
-  const payload = jwt.verify(token, secret);
-  return payload;
+  try {
+    return jwt.verify(token, secret);
+  } catch (error) {
+    console.error("Invalid token:", error);
+    throw error;
+  }
 }
 
 export { createTokenForUser, validateToken };
