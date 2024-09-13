@@ -1,30 +1,38 @@
 <%- include("./partials/head", { title: "SignIn Page" }) %>
 
-  <body>
-    <%- include("./partials/nav") %>
-      <div class="container mt-4">
-        <form action="/user/signin" method="post">
+<body>
+  <!-- Include navigation bar -->
+  <%- include("./partials/nav") %>
 
-          <div>
-            <p style="font-family: 'Gill Sans', sans-serif;" class="fw-semibold fs-2">SignIn to your Account</p>
-          </div>
-
-          <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
-          </div>
-
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control" id="password">
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-
-        </form>
-      </div>
+  <div class="container mt-4">
+    <!-- Sign In form -->
+    <form action="/user/signin" method="post">
       
-      <%- include("./partials/scripts") %>
-  </body>
+      <!-- Page heading -->
+      <div>
+        <p style="font-family: 'Gill Sans', sans-serif;" class="fw-semibold fs-2">SignIn to your Account</p>
+      </div>
 
-  </html>
+      <!-- Email input -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+      </div>
+
+      <!-- Password input -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" id="password">
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+  </div>
+
+  <!-- Include scripts -->
+  <%- include("./partials/scripts") %>
+</body>
+
+</html>

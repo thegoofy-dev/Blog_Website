@@ -1,31 +1,39 @@
 <%- include("./partials/head", { title: "Add New Blog" }) %>
 
-  <body>
-    <%- include("./partials/nav") %>
-      <div class="container">
-        <form action="/blog" method="post" enctype="multipart/form-data">
+<body>
+  <!-- Include navigation bar -->
+  <%- include("./partials/nav") %>
 
-          <div class="mb-3">
-            <label for="coverImage" class="form-label">Cover Image</label>
-            <input type="file" class="form-control" id="coverImage" name="coverImage" aria-describedby="coverImage">
-          </div>
-
-          <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" aria-describedby="title">
-          </div>
-
-          <div class="mb-3">
-            <label for="body">Body</label>
-            <textarea class="form-control" name="body" id="body"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-
-        </form>
-      </div>
+  <div class="container">
+    <!-- Form for adding a new blog post -->
+    <form action="/blog" method="post" enctype="multipart/form-data">
       
-      <%- include("./partials/scripts") %>
-  </body>
+      <!-- Cover Image input -->
+      <div class="mb-3">
+        <label for="coverImage" class="form-label">Cover Image</label>
+        <input type="file" class="form-control" id="coverImage" name="coverImage" aria-describedby="coverImage">
+      </div>
 
-  </html>
+      <!-- Title input -->
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" aria-describedby="title">
+      </div>
+
+      <!-- Body text area -->
+      <div class="mb-3">
+        <label for="body">Body</label>
+        <textarea class="form-control" name="body" id="body"></textarea>
+      </div>
+
+      <!-- Submit button -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+  </div>
+
+  <!-- Include scripts -->
+  <%- include("./partials/scripts") %>
+</body>
+
+</html>

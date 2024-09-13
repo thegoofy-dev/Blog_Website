@@ -3,17 +3,20 @@
   <body>
     <%- include("./partials/nav") %>
       <div class="container mt-3">
+        <!-- Blog Title -->
         <h1
           style="font-size: 2.5rem; margin-bottom: 1rem; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center;">
           <%= blog.title %>
         </h1>
 
+        <!-- Cover Image -->
         <div style="text-align: center; margin-bottom: 1rem;">
           <img src="<%= blog.coverImageURL %>"
             style="max-width: 700px; width: 100%; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
             alt="Cover Image">
         </div>
 
+        <!-- Blog Content -->
         <div
           style="max-width: 700px; margin-left: auto; margin-right: auto; margin-top: 1rem; background-color: #f8f9fa; padding: 1.5rem; border-radius: 0.5rem;">
           <div style="margin: 0; line-height: 1.6; font-family: 'Georgia', serif; font-size: 1.2rem; color: #333;">
@@ -21,6 +24,7 @@
           </div>
         </div>
 
+        <!-- Author Information -->
         <div class="container mt-1"
           style="display: flex; align-items: center; max-width: 700px; margin-left: auto; margin-right: auto;">
           <img width="50px" height="50px" src="<%= blog.createdBy.profileImageURL %>"
@@ -33,8 +37,8 @@
           </div>
         </div>
 
+        <!-- Comments Section -->
         <hr>
-
         <div class="container mt-4">
           <% if (locals.user) { %>
             <form action="/blog/comment/<%= blog._id %>" method="post">
@@ -50,6 +54,7 @@
             <% } %>
         </div>
 
+        <!-- Comment List -->
         <div class="container mt-3">
           <% comments.forEach(comment=> { %>
             <div>
@@ -61,13 +66,13 @@
             <% }) %>
         </div>
 
+        <!-- Back to Home Button -->
         <div style="text-align: center; margin-top: 1rem; padding-bottom: 20px;">
           <a href="/home"
             style="display: inline-block; padding: 0.5rem 1rem; font-size: 1rem; color: #fff; background-color: #6c757d; border: none; border-radius: 0.25rem; text-decoration: none; transition: background-color 0.3s ease-in-out; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
             Back to Home
           </a>
         </div>
-
       </div>
       
       <%- include("./partials/scripts") %>

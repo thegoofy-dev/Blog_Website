@@ -18,7 +18,7 @@ function createTokenForUser(user) {
     role: user.role,
   };
 
-  return jwt.sign(payload, secret, { expiresIn: '1h' });
+  return jwt.sign(payload, secret, { expiresIn: '5h' });
 }
 
 function validateToken(token) {
