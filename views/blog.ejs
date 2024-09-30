@@ -1,81 +1,96 @@
-<%- include("./partials/head", { title: "Blog Page" }) %>
+<%- include("./partials/head", { title: blog.title }) %>
 
-  <body>
-    <%- include("./partials/nav") %>
-      <div class="container mt-3">
-        <!-- Blog Title -->
-        <h1
-          style="font-size: 2.5rem; margin-bottom: 1rem; max-width: 700px; margin-left: auto; margin-right: auto; text-align: center;">
-          <%= blog.title %>
-        </h1>
+    <body>
+        <%- include("./partials/nav") %>
+            <div class="container mt-3">
+                <!-- Blog Title -->
+                <h1 class="text-center" style="font-size: 2.5rem; margin-bottom: 1rem;">
+                    <%= blog.title %>
+                </h1>
 
-        <!-- Cover Image -->
-        <div style="text-align: center; margin-bottom: 1rem;">
-          <img src="<%= blog.coverImageURL %>"
-            style="max-width: 700px; width: 100%; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
-            alt="Cover Image">
-        </div>
+                <!-- Cover Image -->
+                <div class="text-center mb-3">
+                    <img src="<%= blog.coverImageURL %>"
+                        style="max-width: 700px; width: 100%; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+                        alt="Cover Image">
+                </div>
 
-        <!-- Blog Content -->
-        <div
-          style="max-width: 700px; margin-left: auto; margin-right: auto; margin-top: 1rem; background-color: #f8f9fa; padding: 1.5rem; border-radius: 0.5rem;">
-          <div style="margin: 0; line-height: 1.6; font-family: 'Georgia', serif; font-size: 1.2rem; color: #333;">
-            <%- blog.body.replace(/\n/g, '<br>' ) %>
-          </div>
-        </div>
+                <!-- Blog Content -->
+                <div
+                    style="max-width: 700px; margin: 0 auto; margin-top: 1rem; background-color: #f8f9fa; padding: 1.5rem; border-radius: 0.5rem;">
+                    <div
+                        style="margin: 0; line-height: 1.6; font-family: 'Georgia', serif; font-size: 1.2rem; color: #333;">
+                        <%- blog.body.replace(/\n/g, '<br>' ) %>
+                    </div>
+                </div>
 
-        <!-- Author Information -->
-        <div class="container mt-1"
-          style="display: flex; align-items: center; max-width: 700px; margin-left: auto; margin-right: auto;">
-          <img width="50px" height="50px" src="<%= blog.createdBy.profileImageURL %>"
-            style="border-radius: 50%; border: 1px solid #ddd;" alt="Profile Image">
-          <div style="margin-left: 1rem;">
-            <h5 style="margin-bottom: 0.2rem;">
-              <%= blog.createdBy.fullName %>
-            </h5>
-            <small style="color: #6c757d;">Posted on <%= blog.createdAt.toDateString() %></small>
-          </div>
-        </div>
+                <!-- Author Information -->
+                <div class="container mt-3"
+                    style="display: flex; align-items: center; max-width: 700px; margin: 0 auto;">
+                    <img width="50px" height="50px" src="<%= blog.createdBy.profileImageURL %>"
+                        style="border-radius: 50%; border: 1px solid #ddd;" alt="Profile Image">
+                    <div style="margin-left: 1rem;">
+                        <h5 style="margin-bottom: 0.2rem;">
+                            <%= blog.createdBy.fullName %>
+                        </h5>
+                        <small style="color: #6c757d;">Posted on <%= blog.createdAt.toDateString() %></small>
+                    </div>
+                </div>
 
-        <!-- Comments Section -->
-        <hr>
-        <div class="container mt-4">
-          <% if (locals.user) { %>
-            <form action="/blog/comment/<%= blog._id %>" method="post">
-              <div>
-                <h1 style="font-family: 'Gill Sans', sans-serif;" class="fw-semibold fs-2">Comments (<%= comments.length
-                    %>)</h1>
-              </div>
-              <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Enter your Comment" id="content" name="content">
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <% } %>
-        </div>
+                <!-- Comments Section -->
+                <hr>
+                <div class="container mt-4">
+                    <% if (locals.user) { %>
+                        <form action="/blog/comment/<%= blog._id %>" method="post">
+                            <div>
+                                <h1 style="font-family: 'Gill Sans', sans-serif;" class="fw-semibold fs-2">Comments (<%=
+                                        comments.length %>)</h1>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Enter your Comment" id="content"
+                                    name="content">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <% } %>
+                </div>
 
-        <!-- Comment List -->
-        <div class="container mt-3">
-          <% comments.forEach(comment=> { %>
-            <div>
-              <img width="30px" height="30px" src="<%= comment.createdBy.profileImageURL %>"
-                style="border-radius: 50%; border: 1px solid #ddd;" alt="Profile Image">
-              <%= comment.createdBy.fullName %>
-                <pre><%= comment.content %></pre>
+                <!-- Comment List -->
+                <div class="container mt-3">
+                    <% comments.forEach(comment=> { %>
+                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                            <img width="30px" height="30px" src="<%= comment.createdBy.profileImageURL %>"
+                                style="border-radius: 50%; border: 1px solid #ddd; margin-right: 10px;"
+                                alt="Profile Image">
+                            <div>
+                                <strong>
+                                    <%= comment.createdBy.fullName %>
+                                </strong>
+                                <p style="margin: 0;">
+                                    <%= comment.content %>
+                                </p>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+
+                <!-- Back to Button Section -->
+                <div style="text-align: center; margin-top: 1rem; padding-bottom: 20px;">
+                    <% if (fromMyBlogs) { %>
+                        <a href="/my-blogs"
+                            style="display: inline-block; padding: 0.5rem 1rem; font-size: 1rem; color: #fff; background-color: #6c757d; border: none; border-radius: 0.25rem; text-decoration: none; transition: background-color 0.3s ease-in-out; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                            Back to My Blogs
+                        </a>
+                        <% } else { %>
+                            <a href="/home"
+                                style="display: inline-block; padding: 0.5rem 1rem; font-size: 1rem; color: #fff; background-color: #6c757d; border: none; border-radius: 0.25rem; text-decoration: none; transition: background-color 0.3s ease-in-out; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                                Back to Home
+                            </a>
+                            <% } %>
+                </div>
             </div>
-            <% }) %>
-        </div>
 
-        <!-- Back to Home Button -->
-        <div style="text-align: center; margin-top: 1rem; padding-bottom: 20px;">
-          <a href="/home"
-            style="display: inline-block; padding: 0.5rem 1rem; font-size: 1rem; color: #fff; background-color: #6c757d; border: none; border-radius: 0.25rem; text-decoration: none; transition: background-color 0.3s ease-in-out; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-            Back to Home
-          </a>
-        </div>
-      </div>
-      
-      <%- include("./partials/scripts") %>
-  </body>
+            <%- include("./partials/scripts") %>
+    </body>
 
-  </html>
+    </html>
